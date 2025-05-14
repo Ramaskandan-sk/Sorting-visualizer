@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BarChartBig } from "lucide-react";
 import VisualizerControls from "./VisualizerControls";
 import VisualizerDisplay from "./VisualizerDisplay";
@@ -11,6 +11,8 @@ import { Algorithm } from "@/lib/algorithms";
 const SortingVisualizer = () => {
   const [showModal, setShowModal] = useState(false);
   const [customInputError, setCustomInputError] = useState<string | null>(null);
+  
+  const [outputLogs, setOutputLogs] = useState<string[]>([]);
   
   const {
     array,
@@ -37,6 +39,32 @@ const SortingVisualizer = () => {
     resetSorting,
     setCustomArray
   } = useSorting();
+
+  // Effect to update output logs when the current operation changes
+  useEffect(() => {
+    if (currentOperation && currentOperation !== "Not started") {
+      setOutputLogs(prevLogs => {
+        const newLogs = [...prevLogs, currentOperation];
+        // Keep only the last 10 logs to prevent excessive scrolling
+        return newLogs.slice(-10);
+      });
+    }
+  }, [currentOperation]);
+
+  // Effect to add final sorted array to logs when sorting completes
+  useEffect(() => {
+    if (currentOperation === "Sorting completed!") {
+      const sortedArrayString = `Final sorted array: [${array.join(', ')}]`;
+      setOutputLogs(prevLogs => [...prevLogs, sortedArrayString]);
+    }
+  }, [currentOperation, array]);
+
+  // Reset output logs when starting a new sort or changing the array
+  useEffect(() => {
+    if (!isSorting) {
+      setOutputLogs([]);
+    }
+  }, [array, isSorting]);
 
   const handleCustomArray = (input: string) => {
     try {
@@ -135,10 +163,34 @@ const SortingVisualizer = () => {
             sortedIndices={sortedIndices}
           />
           
-          <AlgorithmInfo 
-            algorithm={selectedAlgorithm}
-            currentOperation={currentOperation}
-          />
+          <div className="flex flex-col gap-6">
+            {/* Output Window */}
+            <div className="bg-white rounded-xl shadow-md p-5">
+              <h2 className="font-poppins font-semibold text-lg mb-3">Operation Log</h2>
+              <div className="bg-gray-100 p-3 rounded-lg h-40 overflow-y-auto font-mono text-sm">
+                {outputLogs.length === 0 ? (
+                  <p className="text-gray-500 italic">Operations will appear here...</p>
+                ) : (
+                  <div className="space-y-1">
+                    {outputLogs.map((log, index) => (
+                      <div key={index} className={`
+                        ${log.includes('Comparing') ? 'text-[#3949AB]' : ''}
+                        ${log.includes('Swapping') ? 'text-[#FF5722]' : ''}
+                        ${log.includes('Final sorted') ? 'text-[#4CAF50] font-medium' : ''}
+                      `}>
+                        {log}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+            
+            <AlgorithmInfo 
+              algorithm={selectedAlgorithm}
+              currentOperation={currentOperation}
+            />
+          </div>
         </div>
 
         <CustomArrayInput 

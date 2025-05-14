@@ -239,7 +239,8 @@ export function useSorting() {
         updateOperation(`Comparing array[${animation.indices.join('] and array[')}]`);
       } else if (animation.type === "swap") {
         onSwap(animation.indices);
-        updateOperation(`Swapping array[${animation.indices.join('] and array[')}]`);
+        const swapMessage = `Swapping array[${animation.indices.join('] and array[')}]: ${array[animation.indices[0]]} ↔ ${array[animation.indices[1]]}`;
+        updateOperation(swapMessage);
         
         // Update array
         const newArray = [...array];
