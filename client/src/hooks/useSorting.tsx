@@ -127,6 +127,10 @@ export function useSorting() {
       Math.min(MAX_VALUE, Math.max(MIN_VALUE, val))
     );
     
+    // Sort the array to ensure the initial state is sorted
+    // (Removing this line - we want to use exactly what the user entered)
+    // normalizedArray.sort((a, b) => a - b);
+    
     setArray(normalizedArray);
     resetAnimationState();
   }, [isSorting, resetAnimationState]);
@@ -197,29 +201,35 @@ export function useSorting() {
     resetAnimationState();
     startTimer();
     
+    // Make a copy of the array for algorithms to work with
+    const arrayCopy = [...array];
+    
     // Run the selected sorting algorithm
     const animations: any[] = [];
     
     switch (selectedAlgorithm) {
       case "bubble":
-        bubbleSort([...array], animations);
+        bubbleSort(arrayCopy, animations);
         break;
       case "selection":
-        selectionSort([...array], animations);
+        selectionSort(arrayCopy, animations);
         break;
       case "insertion":
-        insertionSort([...array], animations);
+        insertionSort(arrayCopy, animations);
         break;
       case "merge":
-        mergeSort([...array], animations);
+        mergeSort(arrayCopy, animations);
         break;
       case "quick":
-        quickSort([...array], animations);
+        quickSort(arrayCopy, animations);
         break;
       case "heap":
-        heapSort([...array], animations);
+        heapSort(arrayCopy, animations);
         break;
     }
+    
+    // Create a working copy of the array that we'll update with animations
+    let workingArray = [...array];
     
     // Run animations
     let animationIndex = 0;
@@ -247,20 +257,22 @@ export function useSorting() {
         updateOperation(`Comparing array[${animation.indices.join('] and array[')}]`);
       } else if (animation.type === "swap") {
         onSwap(animation.indices);
-        const swapMessage = `Swapping array[${animation.indices.join('] and array[')}]: ${array[animation.indices[0]]} ↔ ${array[animation.indices[1]]}`;
+        const [i, j] = animation.indices;
+        const swapMessage = `Swapping array[${i}] and array[${j}]: ${workingArray[i]} ↔ ${workingArray[j]}`;
         updateOperation(swapMessage);
         
         // Update array
-        const newArray = [...array];
-        [newArray[animation.indices[0]], newArray[animation.indices[1]]] = 
-          [newArray[animation.indices[1]], newArray[animation.indices[0]]];
+        const newArray = [...workingArray];
+        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+        workingArray = newArray;
         setArray(newArray);
       } else if (animation.type === "sorted") {
         onSorted(animation.indices);
       } else if (animation.type === "overwrite") {
         // Used for operations like merge sort that don't use simple swaps
-        const newArray = [...array];
+        const newArray = [...workingArray];
         newArray[animation.index] = animation.value;
+        workingArray = newArray;
         setArray(newArray);
         updateOperation(`Setting array[${animation.index}] = ${animation.value}`);
       }
