@@ -51,8 +51,8 @@ const SortingVisualizer = () => {
         return;
       }
       
-      if (values.length > 100) {
-        setCustomInputError("Maximum array size is 100");
+      if (values.length > 20) {
+        setCustomInputError("Maximum array size is 20");
         return;
       }
       

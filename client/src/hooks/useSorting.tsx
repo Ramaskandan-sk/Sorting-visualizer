@@ -11,9 +11,10 @@ import {
 import { playComparisonSound, playSwapSound } from "@/lib/audio";
 
 // Constants
-const MIN_VALUE = 5;
-const MAX_VALUE = 300;
-const DEFAULT_ARRAY_SIZE = 50;
+const MIN_VALUE = 1;
+const MAX_VALUE = 99;
+const DEFAULT_ARRAY_SIZE = 15; // Smaller default size
+const MAX_ARRAY_SIZE = 20; // Maximum array size limited to 20
 const DEFAULT_ANIMATION_SPEED = 50;
 
 export function useSorting() {
@@ -278,7 +279,9 @@ export function useSorting() {
   // Handlers for array size and speed adjustments
   const handleArraySizeChange = useCallback((newSize: number) => {
     if (isSorting) return;
-    setArraySize(newSize);
+    // Ensure the array size doesn't exceed the maximum
+    const limitedSize = Math.min(newSize, MAX_ARRAY_SIZE);
+    setArraySize(limitedSize);
   }, [isSorting]);
 
   const handleSpeedChange = useCallback((newSpeed: number) => {

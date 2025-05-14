@@ -22,7 +22,7 @@ export function playComparisonSound(value: number): void {
   const ctx = getAudioContext();
   if (!ctx) return;
   
-  const frequency = 200 + value * 2; // Scale frequency based on value
+  const frequency = 200 + value * 5; // Scale frequency based on value (increased multiplier for smaller numbers)
   playTone(ctx, frequency, 0.1, 0.1);
 }
 

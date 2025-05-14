@@ -38,10 +38,10 @@ const VisualizerDisplay = ({
     }
   };
 
+  // This function is no longer needed since we're not using bars
+  // Keeping it as an empty function to avoid refactoring other parts of the code
   const getBarWidth = () => {
-    if (!containerRef.current) return 4;
-    const containerWidth = containerRef.current.clientWidth;
-    return Math.max(2, Math.min(20, Math.floor((containerWidth - (array.length * 1)) / array.length)));
+    return 0;
   };
 
   return (
@@ -80,22 +80,25 @@ const VisualizerDisplay = ({
         </div>
       </div>
       
-      {/* Array Bars Container */}
+      {/* Number Elements Container */}
       <div 
         ref={containerRef}
-        className="flex-grow flex items-end justify-center space-x-1 px-2"
+        className="flex-grow flex items-center justify-center flex-wrap gap-4 p-4"
       >
         {array.map((value, index) => (
           <div
             key={index}
-            className="bar transition-all duration-200"
+            className="flex items-center justify-center transition-all duration-200 rounded-full text-white font-bold text-xl"
             style={{
-              height: `${value}px`,
-              width: `${getBarWidth()}px`,
+              width: '48px',
+              height: '48px',
               backgroundColor: getBarColor(index),
-              transition: "height 0.2s ease, background-color 0.2s ease"
+              transition: "transform 0.2s ease, background-color 0.2s ease",
+              transform: swapIndices.includes(index) ? 'scale(1.2)' : 'scale(1)'
             }}
-          ></div>
+          >
+            {value}
+          </div>
         ))}
       </div>
     </div>

@@ -45,8 +45,8 @@ const VisualizerControls = ({
           <input
             type="range"
             id="size-slider"
-            min="10"
-            max="100"
+            min="5"
+            max="20"
             value={arraySize}
             onChange={(e) => setArraySize(parseInt(e.target.value))}
             disabled={isSorting}
