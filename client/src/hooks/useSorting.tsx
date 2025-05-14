@@ -60,12 +60,41 @@ export function useSorting() {
     }
   }, []);
 
+  // Reset animation state
+  const resetAnimationState = useCallback(() => {
+    setComparisonIndices([]);
+    setSwapIndices([]);
+    setSortedIndices([]);
+    setComparisons(0);
+    setSwaps(0);
+    setElapsedTime(0);
+    setCurrentOperation("Not started");
+  }, []);
+
+  // Generate a random array
+  const generateRandomArray = useCallback(() => {
+    // Create an array of unique random numbers
+    const newArray = [];
+    const usedNumbers = new Set<number>();
+    
+    while (newArray.length < arraySize) {
+      const value = Math.floor(Math.random() * (MAX_VALUE - MIN_VALUE) + MIN_VALUE);
+      if (!usedNumbers.has(value)) {
+        usedNumbers.add(value);
+        newArray.push(value);
+      }
+    }
+    
+    setArray(newArray);
+    resetAnimationState();
+  }, [arraySize, resetAnimationState]);
+
   // Generate a random array when component mounts or arraySize changes
   useEffect(() => {
     if (!isSorting) {
       generateRandomArray();
     }
-  }, [arraySize]);
+  }, [arraySize, generateRandomArray, isSorting]);
 
   // Cleanup on unmount
   useEffect(() => {
@@ -79,32 +108,11 @@ export function useSorting() {
     pausedRef.current = isPaused;
   }, [isPaused]);
 
-  // Generate a random array
-  const generateRandomArray = useCallback(() => {
-    const newArray = [];
-    for (let i = 0; i < arraySize; i++) {
-      newArray.push(Math.floor(Math.random() * (MAX_VALUE - MIN_VALUE) + MIN_VALUE));
-    }
-    setArray(newArray);
-    resetAnimationState();
-  }, [arraySize]);
-
   // Shuffle the array
   const shuffleArray = useCallback(() => {
     if (isSorting) return;
     generateRandomArray();
   }, [isSorting, generateRandomArray]);
-
-  // Reset animation state
-  const resetAnimationState = useCallback(() => {
-    setComparisonIndices([]);
-    setSwapIndices([]);
-    setSortedIndices([]);
-    setComparisons(0);
-    setSwaps(0);
-    setElapsedTime(0);
-    setCurrentOperation("Not started");
-  }, []);
 
   // Set a custom array
   const setCustomArray = useCallback((customArray: number[]) => {

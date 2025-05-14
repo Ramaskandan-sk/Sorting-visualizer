@@ -28,7 +28,7 @@ const CustomArrayInput = ({ onApply, isSorting, error }: CustomArrayInputProps) 
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             disabled={isSorting}
-            placeholder="Enter numbers separated by commas (e.g., 5,1,4,2,8)"
+            placeholder="Enter numbers (1-99) separated by commas (e.g., 5,1,4,2,8)"
             className="px-4 py-2 border border-neutral-800/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3949AB]"
           />
           {error && (

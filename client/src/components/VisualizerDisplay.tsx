@@ -61,6 +61,10 @@ const VisualizerDisplay = ({
             <span className="inline-block w-3 h-3 rounded-full bg-[#4CAF50] mr-1"></span>
             <span className="text-xs">Sorted</span>
           </div>
+          <div className="flex items-center">
+            <span className="inline-block w-3 h-3 rounded-full bg-[#3949AB] mr-1"></span>
+            <span className="text-xs">Unsorted</span>
+          </div>
         </div>
       </div>
       
@@ -83,15 +87,15 @@ const VisualizerDisplay = ({
       {/* Number Elements Container */}
       <div 
         ref={containerRef}
-        className="flex-grow flex items-center justify-center flex-wrap gap-4 p-4"
+        className="flex-grow grid grid-cols-5 gap-4 p-4 place-items-center max-w-3xl mx-auto"
       >
         {array.map((value, index) => (
           <div
             key={index}
-            className="flex items-center justify-center transition-all duration-200 rounded-full text-white font-bold text-xl"
+            className="flex items-center justify-center transition-all duration-200 rounded-full text-white font-bold text-xl shadow-md"
             style={{
-              width: '48px',
-              height: '48px',
+              width: '50px',
+              height: '50px',
               backgroundColor: getBarColor(index),
               transition: "transform 0.2s ease, background-color 0.2s ease",
               transform: swapIndices.includes(index) ? 'scale(1.2)' : 'scale(1)'

@@ -34,7 +34,7 @@ export function playSwapSound(value: number): void {
   const ctx = getAudioContext();
   if (!ctx) return;
   
-  const frequency = 300 + value * 3; // Different frequency scaling for swaps
+  const frequency = 300 + value * 7; // Different frequency scaling for swaps (increased for smaller numbers)
   playTone(ctx, frequency, 0.1, 0.15);
 }
 
