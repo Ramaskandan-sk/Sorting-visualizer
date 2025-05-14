@@ -58,7 +58,7 @@ const AlgorithmInfo = ({ algorithm, currentOperation }: AlgorithmInfoProps) => {
   const complexity = complexityData[algorithm];
 
   return (
-    <div className="bg-white rounded-xl shadow-md p-5 h-[400px] flex flex-col overflow-hidden">
+    <div className="bg-white rounded-xl shadow-md p-5 h-[400px] flex flex-col">
       <h2 className="font-poppins font-semibold text-lg mb-4">Algorithm Details</h2>
       
       {/* Algorithm Info Tabs */}
@@ -87,13 +87,13 @@ const AlgorithmInfo = ({ algorithm, currentOperation }: AlgorithmInfoProps) => {
           </TabsTrigger>
         </TabsList>
         
-        <TabsContent value="pseudocode" className="flex-grow overflow-y-auto mt-0">
+        <TabsContent value="pseudocode" className="flex-grow h-60 overflow-y-auto mt-0 overflow-y-auto custom-scrollbar">
           <pre className="font-mono text-sm whitespace-pre-wrap p-2 bg-neutral-100/50 rounded-lg">
             <div dangerouslySetInnerHTML={{ __html: getPseudocode(algorithm) }} />
           </pre>
         </TabsContent>
         
-        <TabsContent value="complexity" className="mt-0">
+        <TabsContent value="complexity" className="mt-0 overflow-y-auto custom-scrollbar">
           <div className="bg-neutral-100/50 p-4 rounded-lg">
             <table className="min-w-full">
               <tbody>
