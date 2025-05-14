@@ -65,7 +65,7 @@ const VisualizerControls = ({
               Speed
             </label>
             <span className="text-sm font-medium bg-[#3949AB]/10 text-[#3949AB] px-2 py-1 rounded-md">
-              {speed}
+              {speed === 1 ? '0.1s' : speed === 100 ? '2.0s' : `${((speed - 1) * (2 - 0.1) / 99 + 0.1).toFixed(1)}s`}
             </span>
           </div>
           <input
@@ -90,7 +90,7 @@ const VisualizerControls = ({
             disabled={isSorting}
             className="flex-1 py-2 px-4 bg-[#00ACC1] text-white rounded-lg hover:bg-[#00ACC1]/90 transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <Shuffle className="h-4 w-4 mr-1" /> Shuffle
+            <Shuffle className="h-4 w-4 mr-1" /> Generate
           </button>
           
           <button

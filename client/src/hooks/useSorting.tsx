@@ -73,10 +73,11 @@ export function useSorting() {
 
   // Generate a random array
   const generateRandomArray = useCallback(() => {
-    // Create an array of unique random numbers
+    // Create an array of unique random numbers in ascending order
     const newArray = [];
     const usedNumbers = new Set<number>();
     
+    // Generate unique random numbers
     while (newArray.length < arraySize) {
       const value = Math.floor(Math.random() * (MAX_VALUE - MIN_VALUE) + MIN_VALUE);
       if (!usedNumbers.has(value)) {
@@ -84,6 +85,9 @@ export function useSorting() {
         newArray.push(value);
       }
     }
+    
+    // Sort in ascending order
+    newArray.sort((a, b) => a - b);
     
     setArray(newArray);
     resetAnimationState();
@@ -127,9 +131,13 @@ export function useSorting() {
     resetAnimationState();
   }, [isSorting, resetAnimationState]);
 
-  // Helper function to get delay from speed
+  // Helper function to get delay from speed (0.1 to 2 seconds)
   const getDelay = useCallback(() => {
-    return 105 - speed;
+    // Convert speed (1-100) to delay (100ms to 2000ms)
+    // Reversed scale - higher speed means lower delay
+    const maxDelay = 2000; // 2 seconds
+    const minDelay = 100;  // 0.1 seconds
+    return maxDelay - ((speed - 1) / 99) * (maxDelay - minDelay);
   }, [speed]);
 
   // Start the timer

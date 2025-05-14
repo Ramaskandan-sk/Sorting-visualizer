@@ -59,12 +59,13 @@ const SortingVisualizer = () => {
     }
   }, [currentOperation, array]);
 
-  // Reset output logs when starting a new sort or changing the array
+  // Only clear output logs when explicitly starting a new sort
   useEffect(() => {
-    if (!isSorting) {
+    if (isSorting && sortedIndices.length === 0) {
+      // Only clear logs when a new sort is starting (not yet any sorted indices)
       setOutputLogs([]);
     }
-  }, [array, isSorting]);
+  }, [isSorting, sortedIndices.length]);
 
   const handleCustomArray = (input: string) => {
     try {
