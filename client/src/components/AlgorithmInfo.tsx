@@ -4,7 +4,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface AlgorithmInfoProps {
   algorithm: Algorithm;
-  currentOperation: string;
 }
 
 interface AlgorithmComplexity {
@@ -53,7 +52,7 @@ const complexityData: Record<Algorithm, AlgorithmComplexity> = {
   }
 };
 
-const AlgorithmInfo = ({ algorithm, currentOperation }: AlgorithmInfoProps) => {
+const AlgorithmInfo = ({ algorithm }: AlgorithmInfoProps) => {
   const [activeTab, setActiveTab] = useState<"pseudocode" | "complexity">("pseudocode");
   const complexity = complexityData[algorithm];
 
@@ -118,12 +117,6 @@ const AlgorithmInfo = ({ algorithm, currentOperation }: AlgorithmInfoProps) => {
           </div>
         </TabsContent>
       </Tabs>
-      
-      {/* Current Operation */}
-      <div className="mt-4 p-3 bg-[#3949AB]/10 rounded-lg text-sm">
-        <div className="text-xs text-neutral-800/70 mb-1">Current Operation:</div>
-        <div className="font-medium text-[#3949AB]">{currentOperation}</div>
-      </div>
     </div>
   );
 };

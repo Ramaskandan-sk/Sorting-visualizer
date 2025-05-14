@@ -189,7 +189,6 @@ const SortingVisualizer = () => {
             
             <AlgorithmInfo 
               algorithm={selectedAlgorithm}
-              currentOperation={currentOperation}
             />
           </div>
         </div>

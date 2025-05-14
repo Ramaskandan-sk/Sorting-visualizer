@@ -73,7 +73,7 @@ export function useSorting() {
 
   // Generate a random array
   const generateRandomArray = useCallback(() => {
-    // Create an array of unique random numbers in ascending order
+    // Create an array of unique random numbers (unsorted)
     const newArray = [];
     const usedNumbers = new Set<number>();
     
@@ -86,8 +86,11 @@ export function useSorting() {
       }
     }
     
-    // Sort in ascending order
-    newArray.sort((a, b) => a - b);
+    // Shuffle the array instead of sorting it
+    for (let i = newArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    }
     
     setArray(newArray);
     resetAnimationState();
