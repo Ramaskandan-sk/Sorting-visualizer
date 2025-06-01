@@ -1,0 +1,6 @@
+steps to run the project:
+step1: clone the repo
+step2: npm install
+step3: npm run dev
+step4: visit: http://localhost:5000/
+step5: To close: ctrl + c in the terminal
