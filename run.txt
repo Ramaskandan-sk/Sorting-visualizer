@@ -1,6 +1,25 @@
-steps to run the project:
-step1: clone the repo
-step2: npm install
-step3: npm run dev
-step4: visit: http://localhost:5000/
-step5: To close: ctrl + c in the terminal
+==============================
+🚀 Steps to Run the Project
+==============================
+
+Step 1️⃣: Clone the Repository
+------------------------------
+git clone https://github.com/Ramaskandan-sk/Sorting-visualizer.git
+cd Sorting-visualizer
+
+Step 2️⃣: Install Dependencies
+------------------------------
+npm install
+
+Step 3️⃣: Start the Development Server
+--------------------------------------
+npm run dev
+
+Step 4️⃣: Visit in Browser
+--------------------------
+Open your browser and go to:
+http://localhost:5000/
+
+Step 5️⃣: Stop the Server
+-------------------------
+Press Ctrl + C in the terminal to stop the server.
