@@ -24,6 +24,7 @@ An interactive and educational sorting algorithm visualizer built with React, Ty
 ### Algorithm Details
 ![Algorithm Details](./img/algorithm-details1.png)
 ![Algorithm Details](./img/algorithm-details2.png)
+
 *Algorithm information panel with pseudocode and complexity analysis*
 
 ### Custom Array Input
